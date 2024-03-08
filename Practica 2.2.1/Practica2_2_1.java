@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-public class Main {
+public class Practica2_2_1 {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Persona persona1 = new Persona();
@@ -9,7 +9,7 @@ public class Main {
                     
             System.out.println("Ingrese la edad:");
             int edad = scanner.nextInt();
-            scanner.nextLine(); // Limpiar el buffer
+            scanner.nextLine();
                     
             System.out.println("Ingrese el género:");
             String genero = scanner.nextLine();
