@@ -1,33 +1,34 @@
+import java.util.Scanner;
+
 public class Practica2_1_1_v2 {
-    public static void main(String[] args) {
-        Estudiante est1 = new Estudiante();
-        String tempnom = est1.setGetNombre("Carlos");
-        int tempedad = est1.setGetEdad(20);
-        int tempmat = est1.setGetMatricula(1290180);
-        int tempsem = est1.setGetSemestre(6);
-        System.out.println("Su nombre es: " + tempnom);
-        System.out.println("Su edad es: " + tempedad);
-        System.out.println("Su matrícula es: " + tempmat);
-        System.out.println("Su semestre es: " + tempsem);
+	public static void main(String[] args) {
+		try(Scanner scanner = new Scanner(System.in)){
 
-        Estudiante est2 = new Estudiante();
-        String tempnom2 = est2.setGetNombre("Humberto");
-        int tempedad2 = est2.setGetEdad(21);
-        int tempmat2 = est2.setGetMatricula(1291130);
-        int tempsem2 = est2.setGetSemestre(7);
-        System.out.println("\nSu nombre es: " + tempnom2);
-        System.out.println("Su edad es: " + tempedad2);
-        System.out.println("Su matrícula es: " + tempmat2);
-        System.out.println("Su semestre es: " + tempsem2);
-
-        Estudiante est3 = new Estudiante();
-        String tempnom3 = est3.setGetNombre("Kenneth");
-        int tempedad3 = est3.setGetEdad(23);
-        int tempmat3 = est3.setGetMatricula(1293133);
-        int tempsem3 = est3.setGetSemestre(7);
-        System.out.println("\nSu nombre es: " + tempnom3);
-        System.out.println("Su edad es: " + tempedad3);
-        System.out.println("Su matrícula es: " + tempmat3);
-        System.out.println("Su semestre es: " + tempsem3);
+		System.out.println("Ingrese numero de alumnos: ");
+		Alumno[] alumnos = new Alumno[scanner.nextInt()]; 
+		scanner.nextLine(); 
+		
+		for (int i = 0; i < alumnos.length; i++) {
+			alumnos[i] = new Alumno();
+		}
+		
+		System.out.println("\nDatos de los alumnos:");
+		for (int i = 0; i < alumnos.length; i++) {
+			System.out.println("Ingrese el nombre del alumno " + (i + 1) + ":");
+			System.out.println("Nombre: " + alumnos[i].SetGet("nombre", scanner.nextLine()));
+			System.out.println();
+			System.out.println("Ingrese la matrícula del alumno " + (i + 1) + ":");
+			System.out.println("Matrícula: " + alumnos[i].SetGet("matricula", scanner.nextInt()));
+			System.out.println();
+			System.out.println("Ingrese el promedio del alumno " + (i + 1) + ":");
+			System.out.println("Promedio: " + alumnos[i].SetGet("promedio",scanner.nextDouble()));
+			System.out.println();
+			scanner.nextLine(); // Consumir el salto de línea
+			System.out.println("Ingrese el email del alumno " + (i + 1)	+ ":");
+			System.out.println("Email: " + alumnos[i].SetGet("email",scanner.nextLine()));
+			System.out.println("GENIAL");
+		
+		    }
+	    }
     }
 }

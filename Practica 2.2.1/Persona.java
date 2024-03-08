@@ -6,6 +6,14 @@ public class Persona {
     private String direccion;
     private String profesion;
 
+    public Persona(String nombre, int edad, String genero, String direccion, String profesion) {
+        this.nombre = nombre;
+        this.edad = edad;
+        this.genero = genero;
+        this.direccion = direccion;
+        this.profesion = profesion;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -46,15 +54,19 @@ public class Persona {
         return profesion;
     }
 
-    public static void comer(String comida) {
-        System.out.println("La persona está comiendo " + comida);
+    public static void comer(String comida, String nombrePersona) {
+        System.out.println(nombrePersona + " está comiendo " + comida);
+    }
+
+    public static void comida(String comida, String nombrePersona, int calorias) {
+        System.out.println(nombrePersona + " está comiendo " + comida + " La cual aporta " + calorias + " calorias");
     }
     
-    public void dormir(int horas) {
-        System.out.println("La persona está durmiendo durante " + horas + " horas");
+    public void dormir(int horas, String nombrePersona) {
+        System.out.println(nombrePersona + " está durmiendo durante " + horas + " horas");
     }
    
-    public void hacerEjercicio(String ejercicio) {
-        System.out.println("La persona está haciendo ejercicio de tipo " + ejercicio);
+    public void hacerEjercicio(String ejercicio, String nombrePersona) {
+        System.out.println(nombrePersona + " está haciendo ejercicio de tipo " + ejercicio);
     }
 }
