@@ -1,23 +1,15 @@
 public class Main {
+
     // Clase CuerpoHumano
     static class CuerpoHumano {
         private int edad;
         private double altura;
         private double peso;
-        private Corazon corazon;
-        private Pulmon pulmon;
-        private Higado higado;
-        private Apendice apendice;
 
-        // Constructor
-        public CuerpoHumano(int edad, double altura, double peso) {
-            this.edad = edad;
-            this.altura = altura;
-            this.peso = peso;
-            this.corazon = new Corazon();
-            this.pulmon = new Pulmon();
-            this.higado = new Higado();
-            this.apendice = new Apendice();
+        public CuerpoHumano() {
+            this.edad = 20;
+            this.altura = 1.75;
+            this.peso = 67;
         }
 
         // Getters
@@ -145,7 +137,7 @@ public class Main {
     // Método main
     public static void main(String[] args) {
         // Crear objeto CuerpoHumano
-        CuerpoHumano miCuerpo = new CuerpoHumano(30, 170.5, 70.0);
+        CuerpoHumano miCuerpo = new CuerpoHumano();
 
         // Imprimir valores
         System.out.println("Edad: " + miCuerpo.getEdad() + " años");
