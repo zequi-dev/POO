@@ -4,34 +4,34 @@
 
 Nodo* CrearNodo(char valor){
     Nodo* NuevoNodo = (Nodo*)malloc(sizeof(Nodo));
-        NuevoNodo ->valor = valor;
-        NuevoNodo ->siguiente = NULL;
-        return NuevoNodo;
+    NuevoNodo->valor = valor;
+    NuevoNodo->siguiente = NULL;
+    return NuevoNodo;
 }
 
 void Pushfront(ListaSimple *lista, char valor){
     Nodo* NuevoNodo = CrearNodo(valor);
-        if (lista->Cabeza == NULL){
-            lista->Cabeza = lista->Cola = NuevoNodo;
-        } else {
-            NuevoNodo->siguiente = lista->Cabeza;
-                lista->Cabeza = NuevoNodo;
-        }
+    if (lista->Cabeza == NULL){
+        lista->Cabeza = lista->Cola = NuevoNodo;
+    } else {
+        NuevoNodo->siguiente = lista->Cabeza;
+        lista->Cabeza = NuevoNodo;
+    }
 }
 
 void PushBack(ListaSimple *lista, char valor){
-     Nodo* NuevoNodo = CrearNodo(valor);
-        if (lista->Cabeza == NULL){
-            lista->Cabeza = lista->Cola = NuevoNodo;
-        } else {
-            NuevoNodo->siguiente = lista->Cola;
-                lista->Cola = NuevoNodo;
-        }
+    Nodo* NuevoNodo = CrearNodo(valor);
+    if (lista->Cabeza == NULL){
+        lista->Cabeza = lista->Cola = NuevoNodo;
+    } else {
+        lista->Cola->siguiente = NuevoNodo;
+        lista->Cola = NuevoNodo;
+    }
 }
 
 void PushPos(ListaSimple *lista, int pos, char valor){
-    if(pos = 0){
-        PushFront(lista, valor);  
+    if (pos == 0){
+        Pushfront(lista, valor);  
         return;
     }
 
@@ -49,25 +49,26 @@ void PushPos(ListaSimple *lista, int pos, char valor){
     } else {
         Nodo* NuevoNodo = CrearNodo(valor);
         NuevoNodo->siguiente = actual->siguiente;
-            actual->siguiente = NuevoNodo;
-            if (NuevoNodo->siguiente == NULL){
-                lista->Cola = NuevoNodo;
-            }
+        actual->siguiente = NuevoNodo;
+        if (NuevoNodo->siguiente == NULL){
+            lista->Cola = NuevoNodo;
+        }
     }
 }
 
 void ImprimirLista(ListaSimple *lista){
     Nodo* actual = lista->Cabeza;
     while (actual != NULL){
-        print("%c", actual->valor);
+        printf("%c", actual->valor);  
         actual = actual->siguiente;
     }
+    printf("\n"); 
 }
 
-void ObtenerCabeza(ListaSimple *lista){
-    
+char ObtenerCabeza(ListaSimple* lista) {
+    return lista->Cabeza != NULL ? lista->Cabeza->valor : '\0';
 }
 
-void ObtenerCola(ListaSimple *lista){
-    
+char ObtenerCola(ListaSimple* lista) {
+    return lista->Cola != NULL ? lista->Cola->valor : '\0';
 }

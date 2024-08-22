@@ -14,5 +14,5 @@ void Pushfront(ListaSimple *lista, char valor);
 void PushBack(ListaSimple *lista, char valor);
 void PushPos(ListaSimple *lista, int pos, char valor);
 void ImprimirLista(ListaSimple *lista);
-void ObtenerCabeza(ListaSimple *lista);
-void ObtenerCola(ListaSimple *lista);
+char ObtenerCabeza(ListaSimple *lista);
+char ObtenerCola(ListaSimple *lista);
