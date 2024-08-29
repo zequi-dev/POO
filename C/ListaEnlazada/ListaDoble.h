@@ -1,3 +1,23 @@
+#pragma once
+
+typedef struct Nodo{
+    char valor;
+    struct Nodo* siguiente;
+} Nodo;
+
+typedef struct ListaSimple{
+    Nodo* Cabeza;
+    Nodo* Cola;
+} ListaSimple;
+
+void Pushfront(ListaSimple *lista, char valor);
+void PushBack(ListaSimple *lista, char valor);
+void PushPos(ListaSimple *lista, int pos, char valor);
+void ImprimirLista(ListaSimple *lista);
+char ObtenerCabeza(ListaSimple *lista);
+char ObtenerCola(ListaSimple *lista);
+
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include "ListaSimple.h"
@@ -72,3 +92,23 @@ char ObtenerCabeza(ListaSimple* lista) {
 char ObtenerCola(ListaSimple* lista) {
     return lista->Cola != NULL ? lista->Cola->valor : '\0';
 }
+
+#pragma once
+
+typedef struct Nodo{
+    char valor;
+    struct Nodo* siguiente;
+} Nodo;
+
+typedef struct ListaSimple{
+    Nodo* Cabeza;
+    Nodo* Cola;
+} ListaSimple;
+
+void Pushfront(ListaSimple *lista, char valor);
+void PushBack(ListaSimple *lista, char valor);
+void PushPos(ListaSimple *lista, int pos, char valor);
+void ImprimirLista(ListaSimple *lista);
+char ObtenerCabeza(ListaSimple *lista);
+char ObtenerCola(ListaSimple *lista);
+*/
