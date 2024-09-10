@@ -2,165 +2,122 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 
-Nodo* CrearNodo() {
+Nodo* CrearNodo(char* palabra) {
     Nodo* nuevo = (Nodo*)malloc(sizeof(Nodo));
     if (nuevo == NULL) {
         return NULL;
     }
-    nuevo->data.usuario[0] = '\0';
-    nuevo->data.comentario[0] = '\0'; 
+    nuevo->palabra = (char*)malloc(strlen(palabra) + 1);
+    if (nuevo->palabra == NULL) {
+        free(nuevo);
+        return NULL;
+    }
+    strcpy(nuevo->palabra, palabra);  
     nuevo->siguiente = NULL;
     nuevo->anterior = NULL;
     return nuevo;
 }
 
-void PushFront(ListaDoble* lista, Blog blog) {
-    Nodo* NuevoNodo = CrearNodo();
+ListaDoble* crearListaDoble() {
+    ListaDoble* lista = (ListaDoble*)malloc(sizeof(ListaDoble));
+    if (lista == NULL) {
+        perror("Error al crear lista doble");
+        exit(EXIT_FAILURE);
+    }
+    lista->Cabeza = NULL;
+    return lista;
+}
+
+void PushFront(ListaDoble* lista, char* palabra) {
+    Nodo* NuevoNodo = CrearNodo(palabra);
     if (NuevoNodo == NULL) {
         return;
     }
-    NuevoNodo->data = blog;
     if (lista->Cabeza == NULL) {
-        lista->Cabeza = lista->Cola = NuevoNodo;
+        NuevoNodo->siguiente = NuevoNodo;
+        NuevoNodo->anterior = NuevoNodo;
+        lista->Cabeza = NuevoNodo;
     } else {
+        Nodo* ultimo = lista->Cabeza->anterior;
         NuevoNodo->siguiente = lista->Cabeza;
+        NuevoNodo->anterior = ultimo;
         lista->Cabeza->anterior = NuevoNodo;
+        ultimo->siguiente = NuevoNodo;
         lista->Cabeza = NuevoNodo;
     }
 }
 
-void PushBack(ListaDoble* lista, Blog blog) {
-    Nodo* NuevoNodo = CrearNodo();
+void PushBack(ListaDoble* lista, char* palabra) {
+    Nodo* NuevoNodo = CrearNodo(palabra);
     if (NuevoNodo == NULL) {
         return;
     }
-    NuevoNodo->data = blog;
     if (lista->Cabeza == NULL) {
-        lista->Cabeza = lista->Cola = NuevoNodo;
+        NuevoNodo->siguiente = NuevoNodo;
+        NuevoNodo->anterior = NuevoNodo;
+        lista->Cabeza = NuevoNodo;
     } else {
-        lista->Cola->siguiente = NuevoNodo;
-        NuevoNodo->anterior = lista->Cola;
-        lista->Cola = NuevoNodo;
+        Nodo* ultimo = lista->Cabeza->anterior;
+        NuevoNodo->siguiente = lista->Cabeza;
+        NuevoNodo->anterior = ultimo;
+        lista->Cabeza->anterior = NuevoNodo;
+        ultimo->siguiente = NuevoNodo;
+    }
+}
+
+void PushPos(ListaDoble* lista, char* palabra, int pos) {
+    if (pos < 0) return; 
+    Nodo* NuevoNodo = CrearNodo(palabra);
+    if (NuevoNodo == NULL) {
+        return;
+    }
+
+    if (lista->Cabeza == NULL || pos == 0) {
+        PushFront(lista, palabra);
+        return;
+    }
+
+    Nodo* actual = lista->Cabeza;
+    int i;
+    for (i = 0; i < pos - 1 && actual->siguiente != lista->Cabeza; ++i) {
+        actual = actual->siguiente;
+    }
+
+    if (actual->siguiente == lista->Cabeza) {
+        PushBack(lista, palabra);
+    } else {
+        Nodo* siguiente = actual->siguiente;
+        NuevoNodo->siguiente = siguiente;
+        NuevoNodo->anterior = actual;
+        actual->siguiente = NuevoNodo;
+        siguiente->anterior = NuevoNodo;
     }
 }
 
 void ImprimirLista(ListaDoble* lista) {
+    if (lista->Cabeza == NULL) {
+        printf("Lista vacía.\n");
+        return;
+    }
     Nodo* actual = lista->Cabeza;
-    while (actual != NULL) {
-        printf("Usuario: %s, Comentario: %s\n", actual->data.usuario, actual->data.comentario);
+    do {
+        printf("%s ", (char *)actual->palabra);;
         actual = actual->siguiente;
-    }
-    printf("\n");
-}
-
-void ImprimirListaReversa(ListaDoble* lista) {
-    Nodo* actual = lista->Cola;
-    while (actual != NULL) {
-        printf("Usuario: %s, Comentario: %s\n", actual->data.usuario, actual->data.comentario);
-        actual = actual->anterior;
-    }
+    } while (actual != lista->Cabeza);
     printf("\n");
 }
 
 void LiberarLista(ListaDoble* lista) {
-    Nodo* actual = lista->Cabeza;
-    while (actual != NULL) {
-        Nodo* temp = actual;
-        actual = actual->siguiente;
-        free(temp);
-    }
-    lista->Cabeza = lista->Cola = NULL;
-}
-
-void GenerarUsuarioAleatorio(char* usuario) {
-    int len = rand() % 6 + 1;  
-    for (int i = 0; i < len; i++) {
-        usuario[i] = 'a' + rand() % 26;
-    }
-    usuario[len] = '\0';
-}
-
-void GenerarComentarioAleatorio(char* comentario) {
-    int len = rand() % 253 + 1;  
-    for (int i = 0; i < len; i++) {
-        comentario[i] = 'a' + rand() % 26;
-    }
-    comentario[len] = '\0';
-}
-
-void GenerarComentarios(ListaDoble* lista, int numComentarios) {
-    if (lista == NULL) return;
-    for (int i = 0; i < numComentarios; i++) {
-        Blog nuevoComentario;
-        GenerarUsuarioAleatorio(nuevoComentario.usuario);
-        GenerarComentarioAleatorio(nuevoComentario.comentario);
-        PushBack(lista, nuevoComentario);
-    }
-}
-
-
-void OrdenarPorLongitudComentario(ListaDoble* lista) {
     if (lista->Cabeza == NULL) return;
 
-    for (Nodo* i = lista->Cabeza; i != NULL; i = i->siguiente) {
-        for (Nodo* j = i->siguiente; j != NULL; j = j->siguiente) {
-            if (strlen(i->data.comentario) > strlen(j->data.comentario)) {
-                Blog temp = i->data;
-                i->data = j->data;
-                j->data = temp;
-            }
-        }
-    }
-}
-
-
-//CADA COMENTARIO FILTRADO MANDARLO A OTRA LISTA, NO ELIMINARLO
-void FiltrarComentariosCortos(ListaDoble* lista, unsigned int longitudMinima) {
-    if (lista == NULL || lista->Cabeza == NULL) return;
-
     Nodo* actual = lista->Cabeza;
-    while (actual != NULL) {
-        Nodo* siguiente = actual->siguiente;
-
-        if (strlen(actual->data.comentario) < longitudMinima) {
-            if (actual->anterior != NULL) {
-                actual->anterior->siguiente = actual->siguiente;
-            } else {
-                lista->Cabeza = actual->siguiente;
-            }
-
-            if (actual->siguiente != NULL) {
-                actual->siguiente->anterior = actual->anterior;
-            } else {
-                lista->Cola = actual->anterior;
-            }
-
-            free(actual);
-        }
-
+    Nodo* siguiente;
+    do {
+        siguiente = actual->siguiente;
+        free(actual->palabra);  
+        free(actual);
         actual = siguiente;
-    }
-}
-
-void EliminarUsuariosLargos(ListaDoble* lista) {
-    Nodo* actual = lista->Cabeza;
-    while (actual != NULL) {
-        Nodo* siguiente = actual->siguiente;
-        if (strlen(actual->data.usuario) > 3) {
-            if (actual->anterior) {
-                actual->anterior->siguiente = actual->siguiente;
-            } else {
-                lista->Cabeza = actual->siguiente; 
-            }
-            if (actual->siguiente) {
-                actual->siguiente->anterior = actual->anterior;
-            } else {
-                lista->Cola = actual->anterior; 
-            }
-            free(actual);
-        }
-        actual = siguiente;
-    }
+    } while (actual != lista->Cabeza);
+    free(lista); 
 }

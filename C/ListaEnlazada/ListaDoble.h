@@ -1,29 +1,22 @@
 #pragma once
-
-typedef struct _BLOG {
-    char usuario[30];
-    char comentario[255];
-} Blog;
+#include <stddef.h>
 
 typedef struct Nodo {
-    Blog data;
+    char* palabra;
     struct Nodo* siguiente;
     struct Nodo* anterior;
 } Nodo;
 
-typedef struct ListaDoble {
+typedef struct {
     Nodo* Cabeza;
-    Nodo* Cola;
 } ListaDoble;
 
-void PushFront(ListaDoble* lista, Blog blog);
-void EliminarUsuariosLargos(ListaDoble* lista);
-void FiltrarComentariosCortos(ListaDoble* lista, unsigned int longitudMinima);
-void OrdenarPorLongitudComentario(ListaDoble* lista);
-void GenerarComentarios(ListaDoble* lista, int numComentarios);
-void GenerarComentarioAleatorio(char* comentario);
-void GenerarUsuarioAleatorio(char* usuario);
-void LiberarLista(ListaDoble* lista);
-void ImprimirListaReversa(ListaDoble* lista);
+Nodo* CrearNodo(char* palabra);
+ListaDoble* crearListaDoble();
+void PushFront(ListaDoble* lista, char* palabra);
+void PushBack(ListaDoble* lista, char* palabra);
+void PushPos(ListaDoble* lista, char* palabra, int pos);
 void ImprimirLista(ListaDoble* lista);
-void PushBack(ListaDoble* lista, Blog blog);
+void LiberarLista(ListaDoble* lista);
+ListaDoble* filtro(const char* texto, size_t longitud);
+

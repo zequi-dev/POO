@@ -2,6 +2,9 @@
     "files.associations": {
         "listadoble.h": "c",
         "stdlib.h": "c",
-        "time.h": "c"
+        "time.h": "c",
+        "string.h": "c",
+        "strfile.h": "c",
+        "tulistas.h": "c"
     }
 }
