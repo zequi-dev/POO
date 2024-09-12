@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <lib/h/Listas/tulistas.h>
-#include <lib/h/IOF/strFile.h>
+#include <time.h>
+#include "lib/tulistas.h"
+
 
 ListaDoble* filtro(const char* texto, size_t longitud) {
     size_t numpalabras;
@@ -21,7 +22,6 @@ ListaDoble* filtro(const char* texto, size_t longitud) {
     return lista;
 }
 
-
 char** SepCadenas(const char* str, size_t* numpalabras) {
     size_t capacidad = 10;
     *numpalabras = 0;
@@ -31,7 +31,8 @@ char** SepCadenas(const char* str, size_t* numpalabras) {
         exit(EXIT_FAILURE);
     }
 
-    const char* limites = " \n\t";
+    const char* limites = " \n\t,.!?";
+
     size_t longitud = strlen(str) + 1;
     char* strCopy = (char*)malloc(longitud * sizeof(char));
     if (strCopy == NULL) {
@@ -41,6 +42,7 @@ char** SepCadenas(const char* str, size_t* numpalabras) {
     memcpy(strCopy, str, longitud);
 
     char* token = strtok(strCopy, limites);
+
     while (token != NULL) {
         if (*numpalabras >= capacidad) {
             capacidad *= 2;
@@ -59,7 +61,6 @@ char** SepCadenas(const char* str, size_t* numpalabras) {
         }
 
         memcpy(palabras[*numpalabras], token, token_length);
-
         (*numpalabras)++;
         token = strtok(NULL, limites);
     }
@@ -85,8 +86,15 @@ int main(void) {
         return EXIT_FAILURE;
     }
 
-    size_t longitudes[] = {4, 8, 3, 6};
-    size_t numListas = sizeof(longitudes) / sizeof(longitudes[0]);
+    size_t numListas = 4; // Cambia el número de listas si es necesario
+    size_t longitudes[numListas];
+
+    srand((unsigned int)time(NULL)); // Inicializar la semilla para números aleatorios
+
+    // Generar longitudes aleatorias entre 1 y 10
+    for (size_t i = 0; i < numListas; ++i) {
+        longitudes[i] = (rand() % 9) + 1;
+    }
 
     ListaDoble* log[numListas];
     for (size_t i = 0; i < numListas; ++i) {
@@ -98,8 +106,6 @@ int main(void) {
     for (size_t i = 0; i < numListas; ++i) {
         LiberarLista(log[i]);
     }
-    free(texto);
 
     return EXIT_SUCCESS;
 }
-
