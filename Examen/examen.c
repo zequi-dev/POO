@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "lib/tulistas.h"
+#include "lib/Listas/liblista_doble.h"
 
 
 ListaDoble* filtro(const char* texto, size_t longitud) {

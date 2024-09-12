@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "tulistas.h"
+#include "liblista_doble.h"
 
 ListaDoble* crearListaDoble() {
     ListaDoble* lista = (ListaDoble*)malloc(sizeof(ListaDoble));

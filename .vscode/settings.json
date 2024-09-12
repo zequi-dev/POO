@@ -5,6 +5,7 @@
         "time.h": "c",
         "string.h": "c",
         "strfile.h": "c",
-        "tulistas.h": "c"
+        "tulistas.h": "c",
+        "liblista_doble.h": "c"
     }
 }
