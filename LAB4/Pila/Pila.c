@@ -191,3 +191,8 @@ void imprimirMatrizFinal(int** matriz, int size) {
         printf("]\n");
     }
 }
+
+void liberarListaDoble(ListaDoble* lista) {
+    LiberarLista(lista); 
+    free(lista); 
+}

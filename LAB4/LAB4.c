@@ -74,6 +74,6 @@ int main() {
     liberarMatriz(A, SIZE);
     liberarMatriz(B, SIZE);
     liberarMatriz(matrizFinal, SIZE);
-    
+    liberarListaDoble(pila);
     return 0;
 }

@@ -26,3 +26,4 @@ void inicializarMatrices(int** A, int** B, int size);
 int** ProdSum(int** A, int** B, int size);
 void liberarMatriz(int** matriz, int size);
 void imprimirMatrizFinal(int** matriz, int size);
+void liberarListaDoble(ListaDoble* lista);
